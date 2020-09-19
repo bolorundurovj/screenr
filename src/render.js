@@ -3,9 +3,9 @@
  *   All rights reserved.
  */
 
-const { desktopCapturer, remote, dialog } = require('electron');
+const { desktopCapturer, remote } = require('electron');
 const { writeFile } = require('fs');
-const { Menu } = remote;
+const { Menu, dialog } = remote;
 
 //Buttons
 const videoElement = document.querySelector('video');
@@ -13,6 +13,18 @@ const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const videoSelectBtn = document.getElementById('videoSelectBtn');
 videoSelectBtn.onclick = getVideoSources();
+
+startBtn.onclick = (e) => {
+  mediaRecorder.start();
+  startBtn.classList.add('is-danger');
+  startBtn.innerText = 'Recording';
+};
+
+stopBtn.onclick = (e) => {
+  mediaRecorder.stop();
+  startBtn.classList.remove('is-danger');
+  startBtn.innerText = 'Start';
+};
 
 //Get all available video sources
 async function getVideoSources() {
@@ -57,7 +69,7 @@ async function selectSource(source) {
 
   //Create the Media Recorder
   const options = { mimeType: 'video/webm; codecs=vp9' };
-  mediaRecorder = new mediaRecorder(stream, options);
+  mediaRecorder = new MediaRecorder(stream, options);
 
   //Register Event Handlers
   mediaRecorder.ondataavailable = handleAvailableData;
@@ -78,11 +90,13 @@ async function handleStop(e) {
   const buffer = Buffer.from(await blob.arrayBuffer());
 
   const { filePath } = await dialog.showSaveDialog({
-      buttonLabel: 'Save Video',
-      defaultPath: `vid-${Date.now()}.webm`
-  })
+    buttonLabel: 'Save Video',
+    defaultPath: `vid-${Date.now()}.webm`
+  });
 
   console.log(filePath);
 
-  writeFile(filePath, buffer, () => console.log('Saved Successfully'))
+  if (filePath) {
+    writeFile(filePath, buffer, () => console.log('Saved Successfully'));
+  }
 }
