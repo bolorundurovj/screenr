@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2020 
+ *   All rights reserved.
+ */
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
@@ -11,6 +15,9 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+    }
   });
 
   // and load the index.html of the app.
