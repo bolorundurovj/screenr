@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to screen-record 👋</h1>
+<h1 align="center">Welcome to screenr 👋</h1>
 <p>
   <a href="https://www.npmjs.com/package/screen-record" target="_blank">
     <img alt="Version" src="https://img.shields.io/npm/v/screen-record.svg">
@@ -16,9 +16,9 @@
 
 > A Simple Screen Recorder built with electron
 
-### 🏠 [Homepage](https://github.com/bolorundurovj/screen-recorder)
+### 🏠 [Homepage](https://github.com/bolorundurovj/screenr)
 
-### ✨ [Demo](https://github.com/bolorundurovj/screen-recorder)
+### ✨ [Demo](https://github.com/bolorundurovj/screenr)
 
 ## Install
 
