@@ -4,3 +4,8 @@ body {
   max-width: 50rem;
   padding: 2rem;
 }
+
+.center-buttons{
+  display: flex;
+  justify-content: center;
+}
