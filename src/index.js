@@ -4,7 +4,9 @@
  */
 const { app, BrowserWindow, Notification } = require('electron');
 const path = require('path');
+require('dotenv').config();
 const iconPath = path.join(__dirname, "icon.png");
+const mode = process.env.MODE;
 
 const NOTIFICATION_TITLE = 'ScreenR'
 const NOTIFICATION_BODY = 'ScreenR is ready to go'
@@ -30,7 +32,9 @@ const createWindow = () => {
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (mode == 'development') {
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished
