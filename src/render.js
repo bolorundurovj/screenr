@@ -12,22 +12,10 @@ const videoElement = document.querySelector('video');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const videoSelectBtn = document.getElementById('videoSelectBtn');
-videoSelectBtn.onclick = getVideoSources();
-
-startBtn.onclick = (e) => {
-  mediaRecorder.start();
-  startBtn.classList.add('is-danger');
-  startBtn.innerText = 'Recording';
-};
-
-stopBtn.onclick = (e) => {
-  mediaRecorder.stop();
-  startBtn.classList.remove('is-danger');
-  startBtn.innerText = 'Start';
-};
+const pageTitle = document.getElementById('title');
 
 //Get all available video sources
-async function getVideoSources() {
+videoSelectBtn.onclick = async function getVideoSources() {
   const inputSources = await desktopCapturer.getSources({
     types: ['window', 'screen'],
   });
@@ -44,11 +32,24 @@ async function getVideoSources() {
   videoOptionsMenu.popup();
 }
 
+startBtn.onclick = (e) => {
+  mediaRecorder.start();
+  startBtn.classList.add('is-danger');
+  startBtn.innerText = 'Recording';
+};
+
+stopBtn.onclick = (e) => {
+  mediaRecorder.stop();
+  startBtn.classList.remove('is-danger');
+  startBtn.innerText = 'Start';
+};
+
 let mediaRecorder; //Mediarecorder instance to capture footage
 const recordedChunks = [];
 
 async function selectSource(source) {
-  videoSelectBtn.innerText = source.name;
+  pageTitle.innerText = source.name;
+  videoSelectBtn.innerText = 'Change Video Source';
 
   const constraints = {
     audio: false,
@@ -77,7 +78,6 @@ async function selectSource(source) {
 }
 
 async function handleAvailableData(e) {
-  console.log('Video data available');
   recordedChunks.push(e.data);
 }
 
@@ -91,10 +91,8 @@ async function handleStop(e) {
 
   const { filePath } = await dialog.showSaveDialog({
     buttonLabel: 'Save Video',
-    defaultPath: `vid-${Date.now()}.webm`
+    defaultPath: `vid-${Date.now()}.webm`,
   });
-
-  console.log(filePath);
 
   if (filePath) {
     writeFile(filePath, buffer, () => console.log('Saved Successfully'));
