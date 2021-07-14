@@ -41,6 +41,13 @@ npm start
 * Github: [@bolorundurovj](https://github.com/bolorundurovj)
 * LinkedIn: [@bolorundurovb](https://linkedin.com/in/bolorundurovb)
 
+<div style="width:100%">
+  <img src="./demo/1.png" alt="Demo 1">
+  <img src="./demo/2.png" alt="Demo 2">
+  <img src="./demo/3.png" alt="Demo 3">
+  <img src="./demo/4.png" alt="Demo 4">
+</div>
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
