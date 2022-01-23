@@ -14,7 +14,7 @@
   </a>
 </p>
 
-> A Simple Screen Recorder built with electron
+> A Simple Desktop application for screen recording
 
 ### 🏠 [Homepage](https://github.com/bolorundurovj/screenr)
 

@@ -1,8 +1,3 @@
-/*
- *   Copyright (c) 2020
- *   All rights reserved.
- */
-
 const { desktopCapturer, remote } = require('electron');
 const { writeFile } = require('fs');
 const { Menu, dialog } = remote;
