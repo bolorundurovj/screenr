@@ -1,7 +1,3 @@
-/*
- *   Copyright (c) 2020 
- *   All rights reserved.
- */
 const { app, BrowserWindow, Notification } = require('electron');
 const path = require('path');
 require('dotenv').config();
