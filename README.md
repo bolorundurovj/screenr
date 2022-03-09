@@ -36,7 +36,7 @@ npm start
 
 👤 **Bolorunduro Valiant-Joshua**
 
-* Website: bolorundurovb.com
+* Website: [bolorundurovb.tech](https://bolorundurovb.tech)
 * Twitter: [@bolorundurovb](https://twitter.com/bolorundurovb)
 * Github: [@bolorundurovj](https://github.com/bolorundurovj)
 * LinkedIn: [@bolorundurovb](https://linkedin.com/in/bolorundurovb)
