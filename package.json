@@ -55,5 +55,5 @@
     "@electron-forge/maker-zip": "6.0.0-beta.53",
     "electron": "22.3.25"
   },
-  "repository": "git@github.com-bolorundurovj:bolorundurovj/screenr.git"
+  "repository": "git@github.com:bolorundurovj/screenr.git"
 }
