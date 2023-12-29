@@ -1,53 +1,27 @@
-<h1 align="center">Welcome to screenr 👋</h1>
-<p>
-  <a href="https://www.npmjs.com/package/screen-record" target="_blank">
-    <img alt="Version" src="https://img.shields.io/npm/v/screen-record.svg">
-  </a>
-  <a href="screen-recorder" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-  <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
-  <a href="https://twitter.com/bolorundurovb" target="_blank">
-    <img alt="Twitter: bolorundurovb" src="https://img.shields.io/twitter/follow/bolorundurovb.svg?style=social" />
-  </a>
-</p>
+# Screenr
 
-> A Simple Desktop application for screen recording
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.10.
 
-### 🏠 [Homepage](https://github.com/bolorundurovj/screenr)
+## Development server
 
-### ✨ [Demo](https://github.com/bolorundurovj/screenr)
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Install
+## Code scaffolding
 
-```sh
-npm install
-```
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Usage
+## Build
 
-```sh
-npm start
-```
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Author
+## Running unit tests
 
-👤 **Bolorunduro Valiant-Joshua**
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-* Website: [bolorundurovb.tech](https://bolorundurovb.tech)
-* Twitter: [@bolorundurovb](https://twitter.com/bolorundurovb)
-* Github: [@bolorundurovj](https://github.com/bolorundurovj)
-* LinkedIn: [@bolorundurovb](https://linkedin.com/in/bolorundurovb)
+## Running end-to-end tests
 
-<div style="width:100%">
-  <img src="./demo/1.png" alt="Demo 1">
-  <img src="./demo/2.png" alt="Demo 2">
-  <img src="./demo/3.png" alt="Demo 3">
-  <img src="./demo/4.png" alt="Demo 4">
-</div>
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Show your support
+## Further help
 
-Give a ⭐️ if this project helped you!
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
