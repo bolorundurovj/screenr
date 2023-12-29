@@ -1,7 +1,7 @@
 {
   "name": "screenr",
   "productName": "ScreenR",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple desktop screen recorder",
   "main": "src/index.js",
   "scripts": {
