@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "release": "release-it"
   },
   "keywords": [],
   "author": "Bolorunduro Valiant-Joshua <bolorundurovb@duck.com>",
@@ -53,7 +54,9 @@
     "@electron-forge/maker-rpm": "6.0.0-beta.53",
     "@electron-forge/maker-squirrel": "6.0.0-beta.53",
     "@electron-forge/maker-zip": "6.0.0-beta.53",
-    "electron": "22.3.25"
+    "@release-it/conventional-changelog": "^8.0.1",
+    "electron": "22.3.25",
+    "release-it": "^17.0.1"
   },
   "repository": "git@github.com:bolorundurovj/screenr.git"
 }
