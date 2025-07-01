@@ -388,12 +388,12 @@
     before-after-hook "^2.2.0"
     universal-user-agent "^6.0.0"
 
-"@octokit/endpoint@^9.0.0":
-  version "9.0.4"
-  resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-9.0.4.tgz#8afda5ad1ffc3073d08f2b450964c610b821d1ea"
-  integrity sha512-DWPLtr1Kz3tv8L0UvXTDP1fNwM0S+z6EJpRcvH66orY6Eld4XBMCSYsaWp4xIm61jTWxK68BrR7ibO+vSDnZqw==
+"@octokit/endpoint@^9.0.6":
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/@octokit/endpoint/-/endpoint-9.0.6.tgz#114d912108fe692d8b139cfe7fc0846dfd11b6c0"
+  integrity sha512-H1fNTMA57HbkFESSt3Y9+FBICv+0jFceJFPWDePYlR/iMGrwM5ph+Dd4XRQs+8X+PUFURLQgX9ChPfhJ/1uNQw==
   dependencies:
-    "@octokit/types" "^12.0.0"
+    "@octokit/types" "^13.1.0"
     universal-user-agent "^6.0.0"
 
 "@octokit/graphql@^7.0.0":
@@ -410,17 +410,22 @@
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-19.1.0.tgz#75ec7e64743870fc73e1ab4bc6ec252ecdd624dc"
   integrity sha512-6G+ywGClliGQwRsjvqVYpklIfa7oRPA0vyhPQG/1Feh+B+wU0vGH1JiJ5T25d3g1JZYBHzR2qefLi9x8Gt+cpw==
 
+"@octokit/openapi-types@^20.0.0":
+  version "20.0.0"
+  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-20.0.0.tgz#9ec2daa0090eeb865ee147636e0c00f73790c6e5"
+  integrity sha512-EtqRBEjp1dL/15V7WiX5LJMIxxkdiGJnabzYx5Apx4FkQIFgAfKumXeYAqqJCj1s+BMX4cPFIFC4OLCR6stlnA==
+
 "@octokit/openapi-types@^23.0.1":
   version "23.0.1"
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-23.0.1.tgz#3721646ecd36b596ddb12650e0e89d3ebb2dd50e"
   integrity sha512-izFjMJ1sir0jn0ldEKhZ7xegCTj/ObmEDlEfpFrx4k/JyZSMRHbO3/rBwgE7f3m2DHt+RrNGIVw4wSmwnm3t/g==
 
 "@octokit/plugin-paginate-rest@^9.0.0":
-  version "9.1.5"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-9.1.5.tgz#1705bcef4dcde1f4015ee58a63dc61b68648f480"
-  integrity sha512-WKTQXxK+bu49qzwv4qKbMMRXej1DU2gq017euWyKVudA6MldaSSQuxtz+vGbhxV4CjxpUxjZu6rM2wfc1FiWVg==
+  version "9.2.2"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-9.2.2.tgz#c516bc498736bcdaa9095b9a1d10d9d0501ae831"
+  integrity sha512-u3KYkGF7GcZnSD/3UP0S7K5XUFT2FkOQdcfXZGZQPGv3lm4F2Xbf71lvjldr8c1H3nNbF+33cLEkWYbokGWqiQ==
   dependencies:
-    "@octokit/types" "^12.4.0"
+    "@octokit/types" "^12.6.0"
 
 "@octokit/plugin-request-log@^4.0.0":
   version "4.0.0"
@@ -434,7 +439,7 @@
   dependencies:
     "@octokit/types" "^12.3.0"
 
-"@octokit/request-error@^5.0.0":
+"@octokit/request-error@^5.0.0", "@octokit/request-error@^5.1.1":
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/@octokit/request-error/-/request-error-5.1.1.tgz#b9218f9c1166e68bb4d0c89b638edc62c9334805"
   integrity sha512-v9iyEQJH6ZntoENr9/yXxjuezh4My67CBSu9r6Ve/05Iu5gNgnisNWOsoJHTP6k0Rr0+HQIpnH+kyammu90q/g==
@@ -444,13 +449,13 @@
     once "^1.4.0"
 
 "@octokit/request@^8.0.1", "@octokit/request@^8.0.2":
-  version "8.1.6"
-  resolved "https://registry.yarnpkg.com/@octokit/request/-/request-8.1.6.tgz#a76a859c30421737a3918b40973c2ff369009571"
-  integrity sha512-YhPaGml3ncZC1NfXpP3WZ7iliL1ap6tLkAp6MvbK2fTTPytzVUyUesBBogcdMm86uRYO5rHaM1xIWxigWZ17MQ==
+  version "8.4.1"
+  resolved "https://registry.yarnpkg.com/@octokit/request/-/request-8.4.1.tgz#715a015ccf993087977ea4365c44791fc4572486"
+  integrity sha512-qnB2+SY3hkCmBxZsR/MPCybNmbJe4KAlfWErXq+rBKkQJlbjdJeS85VI9r8UqeLYLvnAenU8Q1okM/0MBsAGXw==
   dependencies:
-    "@octokit/endpoint" "^9.0.0"
-    "@octokit/request-error" "^5.0.0"
-    "@octokit/types" "^12.0.0"
+    "@octokit/endpoint" "^9.0.6"
+    "@octokit/request-error" "^5.1.1"
+    "@octokit/types" "^13.1.0"
     universal-user-agent "^6.0.0"
 
 "@octokit/rest@20.0.2":
@@ -463,12 +468,19 @@
     "@octokit/plugin-request-log" "^4.0.0"
     "@octokit/plugin-rest-endpoint-methods" "^10.0.0"
 
-"@octokit/types@^12.0.0", "@octokit/types@^12.3.0", "@octokit/types@^12.4.0":
+"@octokit/types@^12.0.0", "@octokit/types@^12.3.0":
   version "12.4.0"
   resolved "https://registry.yarnpkg.com/@octokit/types/-/types-12.4.0.tgz#8f97b601e91ce6b9776ed8152217e77a71be7aac"
   integrity sha512-FLWs/AvZllw/AGVs+nJ+ELCDZZJk+kY0zMen118xhL2zD0s1etIUHm1odgjP7epxYU1ln7SZxEUWYop5bhsdgQ==
   dependencies:
     "@octokit/openapi-types" "^19.1.0"
+
+"@octokit/types@^12.6.0":
+  version "12.6.0"
+  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-12.6.0.tgz#8100fb9eeedfe083aae66473bd97b15b62aedcb2"
+  integrity sha512-1rhSOfRa6H9w4YwK0yrf5faDaDTb+yLyBUKOCV4xtCDB5VmIPqd/v9yr9o6SAzOAlRxMiRiCic6JVM1/kunVkw==
+  dependencies:
+    "@octokit/openapi-types" "^20.0.0"
 
 "@octokit/types@^13.1.0":
   version "13.8.0"
@@ -603,10 +615,12 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/node@^16.11.26":
-  version "16.18.68"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.68.tgz#3155f64a961b3d8d10246c80657f9a7292e3421a"
-  integrity sha512-sG3hPIQwJLoewrN7cr0dwEy+yF5nD4D/4FxtQpFciRD/xwUzgD+G05uxZHv5mhfXo4F9Jkp13jjn0CC2q325sg==
+"@types/node@^18.11.18":
+  version "18.19.113"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.113.tgz#f48df552584e47fb4a8bc0b39e1377112be105de"
+  integrity sha512-TmSTE9vyebJ9vSEiU+P+0Sp4F5tMgjiEOZaQUW6wA3ODvi6uBgkHQ+EsIu0pbiKvf9QHEvyRCiaz03rV0b+IaA==
+  dependencies:
+    undici-types "~5.26.4"
 
 "@types/normalize-package-data@^2.4.1":
   version "2.4.4"
@@ -1808,13 +1822,13 @@ electron-winstaller@^4.0.1:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@22.3.25:
-  version "22.3.25"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-22.3.25.tgz#a9a70b63a6712c658cd7fab343129b2a78450f80"
-  integrity sha512-AjrP7bebMs/IPsgmyowptbA7jycTkrJC7jLZTb5JoH30PkBC6pZx/7XQ0aDok82SsmSiF4UJDOg+HoLrEBiqmg==
+electron@28.3.2:
+  version "28.3.2"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-28.3.2.tgz#5bf674fe9a440e5d8e51627c66fc8d4bce4c409f"
+  integrity sha512-bmrQpdncbYNTArlg4n+qsASoXy3eeCELxeRmwUS52RNgvio1gGx5FLCwf8d4R+TsxwfkDWOaWbW0taIKheivKA==
   dependencies:
     "@electron/get" "^2.0.0"
-    "@types/node" "^16.11.26"
+    "@types/node" "^18.11.18"
     extract-zip "^2.0.1"
 
 emoji-regex@^10.2.1:
