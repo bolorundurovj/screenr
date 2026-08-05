@@ -15,8 +15,11 @@
     },
     "@release-it/bumper": {
       "out": [
-        "src-tauri/Cargo.toml",
-        "src-tauri/tauri.conf.json"
+        "src-tauri/tauri.conf.json",
+        {
+          "file": "src-tauri/Cargo.toml",
+          "path": "package.version"
+        }
       ]
     }
   }
