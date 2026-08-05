@@ -12,6 +12,12 @@
     "@release-it/conventional-changelog": {
       "preset": "angular",
       "infile": "CHANGELOG.md"
+    },
+    "@release-it/bumper": {
+      "out": [
+        "src-tauri/Cargo.toml",
+        "src-tauri/tauri.conf.json"
+      ]
     }
   }
 }
