@@ -25,6 +25,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: master
+          token: ${{ secrets.GH_PAT }}
 
       - name: Setup Git User
         run: |
@@ -42,7 +43,7 @@ jobs:
       - name: Run release-it
         id: release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           npm run release -- --ci
           if git describe --tags --exact-match HEAD 2>/dev/null; then
