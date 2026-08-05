@@ -33,7 +33,9 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+          yarn install
 
       - name: Run release-it
         id: release
@@ -76,7 +78,9 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install
+        run: |
+          git config --global url."https://github.com/".insteadOf ssh://git@github.com/
+          yarn install
 
       - name: Publish Release
         env:
