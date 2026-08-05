@@ -18,7 +18,8 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./src/icon.ico"
+        "icon": "./src/icon.ico",
+        "executableName": "screenr"
       },
       "makers": [
         {
