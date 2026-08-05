@@ -1,7 +1,7 @@
 {
   "name": "screenr",
   "productName": "ScreenR",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A simple desktop screen recorder",
   "main": "src/index.js",
   "scripts": {
@@ -9,13 +9,11 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "echo \"No linting configured\""
+    "lint": "echo \"No linting configured\"",
+    "release": "release-it"
   },
   "keywords": [],
-  "author": {
-    "name": "bolorundurovb",
-    "email": "halexanderfleming@gmail.com"
-  },
+  "author": "Bolorunduro Valiant-Joshua <bolorundurovb@duck.com>",
   "license": "MIT",
   "config": {
     "forge": {
@@ -56,6 +54,9 @@
     "@electron-forge/maker-rpm": "6.0.0-beta.53",
     "@electron-forge/maker-squirrel": "6.0.0-beta.53",
     "@electron-forge/maker-zip": "6.0.0-beta.53",
-    "electron": "11.5.0"
-  }
+    "@release-it/conventional-changelog": "^8.0.1",
+    "electron": "39.8.5",
+    "release-it": "^17.0.1"
+  },
+  "repository": "git@github.com:bolorundurovj/screenr.git"
 }
