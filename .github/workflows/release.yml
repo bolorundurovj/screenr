@@ -31,18 +31,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: yarn
 
       - name: Install dependencies
         run: |
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-          yarn install
+          yarn install --frozen-lockfile
 
       - name: Run release-it
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          yarn run release --ci
+          yarn release --ci
           if git describe --tags --exact-match HEAD 2>/dev/null; then
             echo "released=true" >> $GITHUB_OUTPUT
           else
@@ -68,13 +69,28 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: yarn
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux dependencies (Tauri)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install dependencies
         run: |
           git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-          yarn install
+          yarn install --frozen-lockfile
 
-      - name: Publish Release
+      - name: Build and publish Tauri bundles
+        uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn run publish
+        with:
+          tagName: v__VERSION__
+          releaseName: 'ScreenR v__VERSION__'
+          releaseDraft: false
+          prerelease: false

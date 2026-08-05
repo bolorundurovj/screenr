@@ -5,7 +5,7 @@ body {
   padding: 2rem;
 }
 
-.center-buttons{
+.center-buttons {
   display: flex;
   justify-content: center;
 }

@@ -1,0 +1,22 @@
+<h1 id="title" class="my-2 is-uppercase">{{ title }}</h1>
+
+<video #video width="100%"></video>
+
+<hr class="my-2" />
+
+<div class="center-buttons">
+  <button
+    id="startBtn"
+    class="button is-primary mx-2"
+    [class.is-danger]="isRecording"
+    (click)="startRecording()"
+  >
+    {{ startLabel }}
+  </button>
+  <button id="stopBtn" class="button is-warning mx-2" (click)="stopRecording()">
+    Stop
+  </button>
+  <button id="videoSelectBtn" class="button is-info mx-2" (click)="selectSource()">
+    {{ selectLabel }}
+  </button>
+</div>

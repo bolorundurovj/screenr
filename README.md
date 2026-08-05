@@ -16,20 +16,38 @@
 
 > A Simple Desktop application for screen recording
 
+Built with [Tauri](https://tauri.app) (Rust backend) and [Angular](https://angular.dev) (frontend).
+
 ### 🏠 [Homepage](https://github.com/bolorundurovj/screenr)
 
 ### ✨ [Demo](https://github.com/bolorundurovj/screenr)
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org) (LTS)
+- [Rust](https://www.rust-lang.org/tools/install) toolchain
+- Platform [Tauri prerequisites](https://tauri.app/start/prerequisites/) (WebView2 on Windows, WebKitGTK on Linux)
+
 ## Install
 
 ```sh
-npm install
+yarn install
 ```
 
 ## Usage
 
+Run the app in development (starts Angular and launches the Tauri window):
+
 ```sh
-npm start
+yarn tauri:dev
+```
+
+## Build
+
+Produce the native installers/bundles:
+
+```sh
+yarn tauri:build
 ```
 
 ## Author
