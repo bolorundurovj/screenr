@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.2.0](https://github.com/bolorundurovj/screenr/compare/v1.1.3...v1.2.0) (2026-08-05)
+
+### Features
+
+* migrate capture engine to native Rust (xcap + ffmpeg) ([a50940c](https://github.com/bolorundurovj/screenr/commit/a50940cb8a438ac4ab688dea1a2e615230542bf4)), closes [high-performance](https://github.com/hi/issues/performance)
+
 ## [1.1.3](https://github.com/bolorundurovj/screenr/compare/v1.1.2...v1.1.3) (2026-08-05)
 
 ## [1.1.2](https://github.com/bolorundurovj/screenr/compare/v1.1.1...v1.1.2) (2026-08-05)
