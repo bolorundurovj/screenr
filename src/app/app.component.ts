@@ -1,6 +1,8 @@
-import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, NgZone } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { invoke } from "@tauri-apps/api/core";
 import { save } from "@tauri-apps/plugin-dialog";
+import { listen } from "@tauri-apps/api/event";
 import {
   isPermissionGranted,
   requestPermission,
@@ -9,31 +11,54 @@ import {
 
 const NOTIFICATION_TITLE = "ScreenR";
 const NOTIFICATION_BODY = "ScreenR is ready to go";
-const MIME_TYPE = "video/webm; codecs=vp9";
+
+interface VideoSource {
+  id: string;
+  name: string;
+  thumbnail: string;
+}
 
 @Component({
   selector: "app-root",
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
 })
 export class AppComponent implements OnInit {
-  @ViewChild("video", { static: true })
-  videoElement!: ElementRef<HTMLVideoElement>;
-
   title = "⚡ ScreenR";
   startLabel = "Start";
   selectLabel = "Choose Video Source";
   isRecording = false;
 
-  private mediaRecorder?: MediaRecorder;
-  private recordedChunks: Blob[] = [];
+  displays: VideoSource[] = [];
+  windows: VideoSource[] = [];
+  activeTab: 'displays' | 'windows' = 'displays';
+  selectedSourceId: string | null = null;
+  previewSrc: string = "";
+  showPicker = false;
+
+  constructor(private cdr: ChangeDetectorRef, private ngZone: NgZone) {}
 
   async ngOnInit(): Promise<void> {
     await this.showNotification();
+    
+    try {
+      await invoke("init_ffmpeg");
+      console.log("FFmpeg initialized");
+    } catch (e) {
+      console.error("Failed to init ffmpeg:", e);
+    }
+
+    // Listen for preview frames from Rust
+    await listen<string>("preview_frame", (event) => {
+      this.ngZone.run(() => {
+        this.previewSrc = event.payload;
+        this.cdr.detectChanges();
+      });
+    });
   }
 
-  // Notify the user that the app is ready, mirroring the original startup toast.
   private async showNotification(): Promise<void> {
     try {
       let granted = await isPermissionGranted();
@@ -49,69 +74,74 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // Prompt the OS screen/window picker and preview the selected source.
-  async selectSource(): Promise<void> {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      audio: false,
-      video: true,
-    });
+  async fetchSources(): Promise<void> {
+    try {
+      this.displays = [];
+      this.windows = [];
+      
+      // Fetch displays (fast)
+      this.displays = await invoke<VideoSource[]>("get_displays");
+      
+      this.activeTab = 'displays';
+      this.showPicker = true;
 
-    const [track] = stream.getVideoTracks();
-    this.title = track?.label || "Screen";
+      // Fetch windows (slower) asynchronously without blocking UI
+      invoke<VideoSource[]>("get_windows").then((wins) => {
+        this.ngZone.run(() => {
+          this.windows = wins;
+          this.cdr.detectChanges();
+        });
+      }).catch(e => console.error("Failed to load windows", e));
+      
+    } catch (e) {
+      console.error("Failed to fetch displays", e);
+    }
+  }
+
+  selectSource(source: VideoSource): void {
+    this.selectedSourceId = source.id;
+    this.title = source.name;
     this.selectLabel = "Change Video Source";
-
-    // Preview the source in the video element.
-    const video = this.videoElement.nativeElement;
-    video.srcObject = stream;
-    await video.play();
-
-    // Create the media recorder for the selected stream.
-    this.recordedChunks = [];
-    this.mediaRecorder = new MediaRecorder(stream, { mimeType: MIME_TYPE });
-    this.mediaRecorder.ondataavailable = (event) =>
-      this.handleAvailableData(event);
-    this.mediaRecorder.onstop = () => this.handleStop();
+    this.showPicker = false;
+    this.previewSrc = source.thumbnail;
   }
 
-  startRecording(): void {
-    if (!this.mediaRecorder) {
-      return;
-    }
-    this.mediaRecorder.start();
-    this.isRecording = true;
-    this.startLabel = "Recording";
+  closePicker(): void {
+    this.showPicker = false;
   }
 
-  stopRecording(): void {
-    if (!this.mediaRecorder) {
-      return;
-    }
-    this.mediaRecorder.stop();
-    this.isRecording = false;
-    this.startLabel = "Start";
-  }
+  async startRecording(): Promise<void> {
+    if (!this.selectedSourceId) return;
 
-  private handleAvailableData(event: BlobEvent): void {
-    this.recordedChunks.push(event.data);
-  }
-
-  // Save the recorded video once recording stops.
-  private async handleStop(): Promise<void> {
-    const blob = new Blob(this.recordedChunks, { type: MIME_TYPE });
-    const buffer = new Uint8Array(await blob.arrayBuffer());
-
-    const filePath = await save({
-      title: "Save Video",
-      defaultPath: `vid-${Date.now()}.webm`,
-      filters: [{ name: "WebM Video", extensions: ["webm"] }],
-    });
-
-    if (filePath) {
-      await invoke("save_recording", {
-        path: filePath,
-        contents: Array.from(buffer),
+    try {
+      const filePath = await save({
+        title: "Save Video",
+        defaultPath: `vid-${Date.now()}.mp4`,
+        filters: [{ name: "MP4 Video", extensions: ["mp4"] }],
       });
+
+      if (!filePath) return;
+
+      await invoke("start_recording", {
+        sourceId: this.selectedSourceId,
+        path: filePath,
+      });
+
+      this.isRecording = true;
+      this.startLabel = "Recording";
+    } catch (e) {
+      console.error("Failed to start recording", e);
+    }
+  }
+
+  async stopRecording(): Promise<void> {
+    try {
+      await invoke("stop_recording");
+      this.isRecording = false;
+      this.startLabel = "Start";
       console.log("Saved Successfully");
+    } catch (e) {
+      console.error("Failed to stop recording", e);
     }
   }
 }

@@ -1,0 +1,10 @@
+.placeholder-box {
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #222;
+  border-radius: 8px;
+  border: 1px dashed #555;
+  color: #888;
+}
