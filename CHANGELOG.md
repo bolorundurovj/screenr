@@ -1,5 +1,18 @@
 # Changelog
 
+# [1.2.0](https://github.com/bolorundurovj/screenr/compare/v1.1.3...v1.2.0) (2026-08-05)
+
+### Bug Fixes
+
+* add libgbm-dev and rollback release to trigger clean pipeline ([1316e41](https://github.com/bolorundurovj/screenr/commit/1316e4124cac213a974fbfd4dffdd3907aeb3dbf))
+* add missing linux dependencies for xcap ([1af69e9](https://github.com/bolorundurovj/screenr/commit/1af69e911ef11fb3b048447c361f6f43e8caff3d))
+* rollback versions and restore erased Cargo.toml dependencies ([c6bff67](https://github.com/bolorundurovj/screenr/commit/c6bff677190be42c81ae42cf2be978b2e1761335))
+* rollback versions to trigger clean release ([1152929](https://github.com/bolorundurovj/screenr/commit/11529294139b4ce698c42dcf666738e8d5a949af))
+
+### Features
+
+* migrate capture engine to native Rust (xcap + ffmpeg) ([a50940c](https://github.com/bolorundurovj/screenr/commit/a50940cb8a438ac4ab688dea1a2e615230542bf4)), closes [high-performance](https://github.com/hi/issues/performance)
+
 ## [1.1.3](https://github.com/bolorundurovj/screenr/compare/v1.1.2...v1.1.3) (2026-08-05)
 
 ## [1.1.2](https://github.com/bolorundurovj/screenr/compare/v1.1.1...v1.1.2) (2026-08-05)
