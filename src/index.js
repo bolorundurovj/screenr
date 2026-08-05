@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Notification } = require('electron');
+const { app, BrowserWindow, Notification, ipcMain, desktopCapturer, Menu, dialog } = require('electron');
 const path = require('path');
 require('dotenv').config();
 const iconPath = path.join(__dirname, "icon.png");
@@ -19,7 +19,7 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
+      contextIsolation: false,
     },
     icon: iconPath
   });
@@ -62,3 +62,23 @@ app.on('activate', () => {
 function showNotification () {
   new Notification({ title: NOTIFICATION_TITLE, body: NOTIFICATION_BODY }).show()
 }
+
+ipcMain.handle('get-sources', async () => {
+  const sources = await desktopCapturer.getSources({ types: ['window', 'screen'] });
+  return sources.map(source => ({ id: source.id, name: source.name }));
+});
+
+ipcMain.on('show-context-menu', (event, sources) => {
+  const template = sources.map(source => ({
+    label: source.name,
+    click: () => {
+      event.sender.send('source-selected', source);
+    }
+  }));
+  const menu = Menu.buildFromTemplate(template);
+  menu.popup({ window: BrowserWindow.fromWebContents(event.sender) });
+});
+
+ipcMain.handle('show-save-dialog', async (event, options) => {
+  return await dialog.showSaveDialog(options);
+});
