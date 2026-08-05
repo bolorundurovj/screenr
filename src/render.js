@@ -1,6 +1,5 @@
-const { desktopCapturer, remote } = require('electron');
+const { ipcRenderer } = require('electron');
 const { writeFile } = require('fs');
-const { Menu, dialog } = remote;
 
 //Buttons
 const videoElement = document.querySelector('video');
@@ -11,21 +10,13 @@ const pageTitle = document.getElementById('title');
 
 //Get all available video sources
 videoSelectBtn.onclick = async function getVideoSources() {
-  const inputSources = await desktopCapturer.getSources({
-    types: ['window', 'screen'],
-  });
-
-  const videoOptionsMenu = Menu.buildFromTemplate(
-    inputSources.map((source) => {
-      return {
-        label: source.name,
-        click: () => selectSource(source),
-      };
-    })
-  );
-
-  videoOptionsMenu.popup();
+  const inputSources = await ipcRenderer.invoke('get-sources');
+  ipcRenderer.send('show-context-menu', inputSources);
 }
+
+ipcRenderer.on('source-selected', (event, source) => {
+  selectSource(source);
+});
 
 startBtn.onclick = (e) => {
   mediaRecorder.start();
@@ -84,7 +75,7 @@ async function handleStop(e) {
 
   const buffer = Buffer.from(await blob.arrayBuffer());
 
-  const { filePath } = await dialog.showSaveDialog({
+  const { filePath } = await ipcRenderer.invoke('show-save-dialog', {
     buttonLabel: 'Save Video',
     defaultPath: `vid-${Date.now()}.webm`,
   });
