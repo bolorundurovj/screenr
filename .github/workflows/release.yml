@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
-    types:
-      - closed
 
 permissions:
   contents: write
@@ -38,14 +33,14 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Run release-it
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          npm run release -- --ci
+          yarn run release --ci
           if git describe --tags --exact-match HEAD 2>/dev/null; then
             echo "released=true" >> $GITHUB_OUTPUT
           else
@@ -81,9 +76,9 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: npm install
+        run: yarn install
 
       - name: Publish Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm run publish
+        run: yarn run publish
