@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.2.1](https://github.com/bolorundurovj/screenr/compare/v1.2.0...v1.2.1) (2026-08-22)
+
 # [1.2.0](https://github.com/bolorundurovj/screenr/compare/v1.1.3...v1.2.0) (2026-08-05)
 
 ### Bug Fixes
