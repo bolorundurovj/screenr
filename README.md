@@ -12,6 +12,9 @@
   <a href="https://twitter.com/bolorundurovb" target="_blank">
     <img alt="Twitter: bolorundurovb" src="https://img.shields.io/twitter/follow/bolorundurovb.svg?style=social" />
   </a>
+  <a href="[https://twitter.com/bolorundurovb](https://github.com/bolorundurovj/screenr/releases)" target="_blank">
+    <img alt="Github Downloads: bolorundurovb" src="https://img.shields.io/github/downloads/bolorundurovj/screenr/total?style=flat-square" />
+  </a>
 </p>
 
 > A Simple Desktop application for screen recording
