@@ -1,0 +1,102 @@
+<app-window-frame title="Review take" [subtitle]="fileName" [showDone]="true" (done)="router.navigate(['/library'])">
+    <div class="flex h-full flex-col gap-4 overflow-y-auto bg-surface-2 p-5">
+        <div class="relative overflow-hidden rounded-xl bg-black">
+            <video
+                #player
+                [src]="videoUrl()"
+                class="aspect-video w-full"
+                (loadedmetadata)="onLoadedMetadata()"
+                (timeupdate)="onTimeUpdate()"
+                (error)="onLoadError()"
+                (ended)="isPlaying.set(false)"
+            ></video>
+
+            @if (loadError(); as message) {
+            <p
+                class="absolute inset-x-0 top-1/2 -translate-y-1/2 px-6 text-center text-[13px] leading-relaxed text-white/80"
+            >
+                {{ message }}
+            </p>
+            }
+
+            <button
+                type="button"
+                (click)="togglePlay()"
+                [attr.aria-label]="isPlaying() ? 'Pause' : 'Play'"
+                class="absolute bottom-3 left-3 grid size-11 place-items-center rounded-full bg-black/60 text-white backdrop-blur transition-colors hover:bg-black/75 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+            >
+                <app-icon [name]="isPlaying() ? 'pause' : 'play'" [size]="20" />
+            </button>
+
+            <span
+                class="absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 font-mono text-[11.5px] text-white backdrop-blur"
+            >
+                {{ format(currentTime()) }} / {{ format(duration()) }}
+            </span>
+        </div>
+
+        <section class="flex flex-col gap-3 rounded-xl border border-border-soft bg-surface p-4">
+            <div class="flex items-baseline justify-between gap-3">
+                <h2 class="text-[11.5px] font-semibold tracking-wide text-ink-2">Trim</h2>
+                <span class="font-mono text-[11.5px] text-muted">
+                    {{ format(trimStart()) }} to {{ format(trimEnd()) }}
+                </span>
+            </div>
+
+            <label class="flex items-center gap-3 text-[12px] text-muted">
+                <span class="w-10 flex-none">Start</span>
+                <input
+                    type="range"
+                    class="h-1 flex-1 accent-accent"
+                    min="0"
+                    [max]="duration()"
+                    step="0.1"
+                    [value]="trimStart()"
+                    (input)="setTrimStart($any($event.target).value)"
+                />
+            </label>
+
+            <label class="flex items-center gap-3 text-[12px] text-muted">
+                <span class="w-10 flex-none">End</span>
+                <input
+                    type="range"
+                    class="h-1 flex-1 accent-accent"
+                    min="0"
+                    [max]="duration()"
+                    step="0.1"
+                    [value]="trimEnd()"
+                    (input)="setTrimEnd($any($event.target).value)"
+                />
+            </label>
+        </section>
+
+        <div class="mt-auto flex flex-wrap items-center justify-between gap-3">
+            <button
+                type="button"
+                (click)="discard()"
+                class="h-10 rounded-[10px] px-4 text-[13px] font-semibold text-muted transition-colors hover:bg-hover hover:text-danger-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+                Discard
+            </button>
+
+            <div class="flex gap-2">
+                <button
+                    type="button"
+                    (click)="exportAs('gif')"
+                    [disabled]="!!exporting()"
+                    class="h-10 rounded-[10px] border border-border bg-surface px-4 text-[13px] font-semibold text-ink transition-colors hover:bg-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-progress disabled:opacity-60"
+                >
+                    {{ exporting() === 'gif' ? 'Rendering…' : 'Export GIF' }}
+                </button>
+                <button
+                    type="button"
+                    (click)="exportAs('mp4')"
+                    [disabled]="!!exporting()"
+                    class="h-10 rounded-[10px] bg-accent px-4 text-[13px] font-semibold text-white transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-progress disabled:opacity-60"
+                >
+                    {{ exporting() === 'mp4' ? 'Rendering…' : 'Export MP4' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</app-window-frame>

@@ -1,0 +1,240 @@
+<div class="relative flex h-screen w-screen flex-col overflow-hidden bg-surface">
+    <div class="flex flex-1 flex-col gap-5 overflow-y-auto p-6">
+        <header class="flex items-start justify-between gap-3">
+            <div class="flex flex-col gap-0.5">
+                <h1 class="text-[20px] font-semibold leading-tight tracking-[-0.025em] text-ink">Ready to capture</h1>
+                <p class="text-[13px] text-muted">Choose what to record</p>
+            </div>
+
+            <div class="flex flex-none gap-0.5">
+                <button
+                    type="button"
+                    (click)="router.navigate(['/library'])"
+                    title="Library"
+                    aria-label="Library"
+                    class="grid size-9 place-items-center rounded-[10px] text-muted transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    <app-icon name="library" [size]="19" />
+                </button>
+                <button
+                    type="button"
+                    (click)="router.navigate(['/settings'])"
+                    title="Advanced settings"
+                    aria-label="Advanced settings"
+                    class="grid size-9 place-items-center rounded-[10px] text-muted transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    <app-icon name="settings" [size]="19" />
+                </button>
+            </div>
+        </header>
+
+        <div class="flex flex-col gap-2.5">
+            <button
+                type="button"
+                (click)="openPicker('display')"
+                class="flex items-center gap-3.5 rounded-[13px] bg-accent px-4 py-4 text-left text-white shadow-[0_10px_24px_-14px_rgba(47,95,216,0.9)] transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+                <app-icon name="display" [size]="22" />
+                <span class="flex flex-col gap-0.5">
+                    <span class="text-[14px] font-semibold">Record screen</span>
+                    <span class="text-[12px] text-white/75">One or more displays</span>
+                </span>
+            </button>
+
+            <button
+                type="button"
+                (click)="openPicker('window')"
+                class="flex items-center gap-3.5 rounded-[13px] border border-border bg-surface px-4 py-4 text-left text-ink transition-colors hover:bg-surface-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+                <app-icon name="window" [size]="22" />
+                <span class="flex flex-col gap-0.5">
+                    <span class="text-[14px] font-semibold">Record window</span>
+                    <span class="text-[12px] text-muted">A single app or tab</span>
+                </span>
+            </button>
+        </div>
+
+        @if (settings(); as s) {
+        <section class="flex flex-col gap-2.5 rounded-[13px] border border-border-soft bg-surface-2 p-3.5">
+            <h2 class="text-[10.5px] font-semibold uppercase tracking-[0.09em] text-muted-2">Audio sources</h2>
+
+            <div class="grid grid-cols-2 gap-2">
+                <div
+                    class="flex items-center justify-between gap-2 rounded-[10px] border border-border-2 bg-surface py-2.5 pl-3 pr-2.5"
+                >
+                    <span class="flex flex-col">
+                        <span class="text-[13px] font-semibold text-ink">Microphone</span>
+                        <span class="text-[11px] text-muted-2">Voice track</span>
+                    </span>
+                    <app-toggle-switch
+                        ariaLabel="Microphone"
+                        [ngModel]="s.mic"
+                        (ngModelChange)="updateAudio('mic', $event)"
+                        name="mic"
+                    />
+                </div>
+
+                <div
+                    class="flex items-center justify-between gap-2 rounded-[10px] border border-border-2 bg-surface py-2.5 pl-3 pr-2.5 opacity-60"
+                    title="System sound capture is coming in a future release"
+                >
+                    <span class="flex flex-col">
+                        <span class="text-[13px] font-semibold text-ink">System sound</span>
+                        <span class="text-[11px] text-muted-2">Coming soon</span>
+                    </span>
+                    <app-toggle-switch
+                        ariaLabel="System sound, coming soon"
+                        [disabled]="true"
+                        [ngModel]="false"
+                        name="systemAudio"
+                    />
+                </div>
+            </div>
+
+            <p class="text-[11.5px] leading-relaxed text-muted-2">
+                @if (silent()) { Video only. The microphone is off. } @else { Recording your microphone as a separate
+                track. }
+            </p>
+        </section>
+        } @if (!recording.encoderReady()) {
+        <p
+            class="rounded-[10px] border border-border-soft bg-surface-2 px-3 py-2 text-center text-[11.5px] text-muted-2"
+        >
+            Preparing the video encoder. Recording will be available in a moment.
+        </p>
+        }
+
+        <div class="mt-auto flex flex-wrap items-center justify-center gap-1.5 text-[11.5px] text-muted-2">
+            <kbd
+                class="rounded-[5px] border border-border-2 bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] not-italic text-ink-3"
+                >Ctrl</kbd
+            >
+            <kbd
+                class="rounded-[5px] border border-border-2 bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] not-italic text-ink-3"
+                >Shift</kbd
+            >
+            <kbd
+                class="rounded-[5px] border border-border-2 bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] not-italic text-ink-3"
+                >R</kbd
+            >
+            <span>to start or stop, from any app</span>
+        </div>
+    </div>
+
+    @if (picker(); as kind) {
+    <div
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-label]="kind === 'window' ? 'Select windows' : 'Select displays'"
+        class="absolute inset-0 z-10 flex items-center justify-center bg-[rgba(16,20,24,0.34)] p-4 backdrop-blur-[4px]"
+    >
+        <div
+            class="flex max-h-full w-full flex-col overflow-hidden rounded-[14px] bg-surface shadow-[0_24px_60px_-18px_rgba(6,12,22,0.5)]"
+        >
+            <header class="flex flex-none flex-col gap-0.5 border-b border-border-soft p-4">
+                <h2 class="text-[14px] font-semibold tracking-tight text-ink">
+                    {{ kind === 'window' ? 'Select windows' : 'Select displays' }}
+                </h2>
+                <p class="text-[12px] text-muted-2">
+                    {{ kind === 'window' ? 'Pick one or more open apps' : 'Pick one or more monitors to capture' }}
+                </p>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-2.5">
+                @if (kind === 'display') {
+                <div class="grid grid-cols-2 gap-2">
+                    @for (source of displays(); track source.id) {
+                    <button
+                        type="button"
+                        [attr.aria-pressed]="isSelected(source)"
+                        (click)="toggleSelection(source)"
+                        class="relative flex flex-col gap-2 rounded-[11px] border p-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        [class]="isSelected(source)
+                    ? 'border-accent bg-accent-soft'
+                    : 'border-border-2 bg-surface-2 hover:bg-hover'"
+                    >
+                        <span class="block h-[46px] overflow-hidden rounded-[7px] bg-black">
+                            @if (source.thumbnail) {
+                            <img [src]="source.thumbnail" alt="" class="size-full object-cover" />
+                            }
+                        </span>
+                        <span class="flex flex-col">
+                            <span class="truncate text-[12.5px] font-semibold text-ink">{{ source.name }}</span>
+                            <span class="truncate text-[11px] text-muted-2">{{ describe(source) }}</span>
+                        </span>
+                        <span
+                            class="absolute right-2.5 top-2.5 grid size-4 place-items-center rounded-[5px] border"
+                            [class]="isSelected(source)
+                      ? 'border-accent bg-accent text-white'
+                      : 'border-border bg-surface text-transparent'"
+                        >
+                            <app-icon name="check" [size]="11" />
+                        </span>
+                    </button>
+                    } @empty {
+                    <p class="col-span-2 py-8 text-center text-[13px] text-muted">No displays found.</p>
+                    }
+                </div>
+
+                <button
+                    type="button"
+                    (click)="selectAllDisplays()"
+                    class="mt-2.5 h-9 w-full rounded-[10px] border border-dashed border-border bg-surface-2 text-[12.5px] font-semibold text-ink-3 transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    Select entire desktop
+                </button>
+                } @else {
+                <div class="flex flex-col gap-0.5">
+                    @for (source of windows(); track source.id) {
+                    <button
+                        type="button"
+                        [attr.aria-pressed]="isSelected(source)"
+                        (click)="toggleSelection(source)"
+                        class="flex items-center gap-3 rounded-[10px] border px-3 py-2.5 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        [class]="isSelected(source)
+                    ? 'border-accent bg-accent-soft'
+                    : 'border-transparent hover:bg-hover'"
+                    >
+                        <span
+                            class="grid size-4 flex-none place-items-center rounded-[5px] border"
+                            [class]="isSelected(source)
+                      ? 'border-accent bg-accent text-white'
+                      : 'border-border bg-surface text-transparent'"
+                        >
+                            <app-icon name="check" [size]="11" />
+                        </span>
+                        <span class="flex min-w-0 flex-col">
+                            <span class="truncate text-[13px] font-semibold text-ink">{{ source.name }}</span>
+                            <span class="truncate text-[11.5px] text-muted-2">{{ describe(source) }}</span>
+                        </span>
+                    </button>
+                    } @empty {
+                    <p class="py-8 text-center text-[13px] text-muted">
+                        {{ windowsLoading() ? 'Looking for open windows…' : 'No windows found.' }}
+                    </p>
+                    }
+                </div>
+                }
+            </div>
+
+            <footer class="flex flex-none items-center justify-end gap-2 border-t border-border-soft p-3">
+                <button
+                    type="button"
+                    (click)="closePicker()"
+                    class="h-9 rounded-[9px] px-3.5 text-[13px] font-semibold text-muted transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="button"
+                    (click)="confirm()"
+                    [disabled]="selectedCount() === 0"
+                    class="h-9 rounded-[9px] bg-accent px-4 text-[13px] font-semibold text-white transition-colors hover:bg-accent-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:bg-hover disabled:text-muted-2"
+                >
+                    {{ confirmLabel() }}
+                </button>
+            </footer>
+        </div>
+    </div>
+    }
+</div>
