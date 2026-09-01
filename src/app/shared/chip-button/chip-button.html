@@ -1,0 +1,15 @@
+<button
+    type="button"
+    [attr.aria-pressed]="selected"
+    [disabled]="disabled"
+    (click)="clicked.emit()"
+    class="inline-flex h-9 items-center justify-center gap-2 rounded-full border px-3.5 text-[12.5px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent disabled:cursor-not-allowed disabled:opacity-50"
+    [class]="selected
+    ? 'border-accent bg-accent-soft text-ink'
+    : 'border-border bg-surface text-ink-3 hover:bg-hover hover:text-ink'"
+>
+    @if (color) {
+    <span class="size-3.5 rounded-full ring-1 ring-black/10" [style.background-color]="color"></span>
+    } @if (label) { {{ label }} }
+    <ng-content></ng-content>
+</button>
