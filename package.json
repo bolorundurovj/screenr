@@ -13,8 +13,19 @@
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
-    "lint": "echo \"No linting configured\"",
-    "release": "release-it"
+    "lint": "eslint src",
+    "release": "release-it",
+    "test": "ng test",
+    "test:rust": "cd src-tauri && cargo test",
+    "test:all": "yarn test && yarn test:rust && yarn test:it",
+    "test:it": "cd src-tauri && cargo test --test export_integration -- --ignored",
+    "lint:fix": "eslint src --fix",
+    "lint:rust": "cd src-tauri && cargo clippy --all-targets -- -D warnings",
+    "format": "prettier --write \"src/**/*.{ts,html,css}\" \"*.{json,js}\" && cd src-tauri && cargo fmt",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css}\" \"*.{json,js}\"",
+    "format:rust": "cd src-tauri && cargo fmt",
+    "verify": "yarn lint && yarn format:check && yarn lint:rust && yarn format:rust:check",
+    "format:rust:check": "cd src-tauri && cargo fmt --check"
   },
   "dependencies": {
     "@angular/common": "^20.1.4",
@@ -25,9 +36,6 @@
     "@angular/router": "^20.1.4",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-dialog": "^2",
-    "@tauri-apps/plugin-fs": "^2",
-    "@tauri-apps/plugin-notification": "^2",
-    "@tauri-apps/plugin-opener": "^2",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1",
     "zone.js": "~0.15.1"
@@ -36,11 +44,21 @@
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
     "@angular/compiler-cli": "^20.1.4",
+    "@eslint/js": "^10.0.1",
     "@release-it/bumper": "^8.0.0",
     "@release-it/conventional-changelog": "^12.0.0",
+    "@tailwindcss/postcss": "^4.3.3",
     "@tauri-apps/cli": "^2",
+    "angular-eslint": "^20",
+    "eslint": "^9",
+    "eslint-config-prettier": "^10.1.8",
+    "jsdom": "^30.0.1",
+    "prettier": "^3.9.6",
     "release-it": "^21.0.1",
-    "typescript": "~5.8.3"
+    "tailwindcss": "^4.3.3",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.67.0",
+    "vitest": "^4.1.10"
   },
   "repository": "git@github.com:bolorundurovj/screenr.git"
 }

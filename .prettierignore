@@ -1,0 +1,13 @@
+dist
+node_modules
+.angular
+src-tauri/target
+src-tauri/gen
+yarn.lock
+CHANGELOG.md
+
+# Generated or vendored assets, not hand-edited.
+src/assets/icons.svg
+
+# Design references shipped with the repo.
+ScreenR(2).html
