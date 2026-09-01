@@ -37,3 +37,13 @@ tauri-plugin-global-shortcut = "2"
 
 [dev-dependencies]
 regex = "1"
+
+# Capture is per-pixel work over millions of pixels a frame, and unoptimised it
+# runs roughly 100x slower, which drops `tauri dev` recordings to a couple of
+# frames a second. The generic half of `image` monomorphises into this crate, so
+# optimising only the dependencies leaves the compositing step slow.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
