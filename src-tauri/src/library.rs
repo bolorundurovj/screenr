@@ -1,5 +1,6 @@
 use crate::AppState;
 use serde::Serialize;
+use std::cmp::Reverse;
 use std::fs;
 use std::path::Path;
 use std::time::UNIX_EPOCH;
@@ -62,7 +63,7 @@ pub fn get_takes(state: State<'_, AppState>) -> Result<Vec<Take>, String> {
         .filter_map(|path| read_take(&path))
         .collect();
 
-    takes.sort_by(|a, b| b.modified_time.cmp(&a.modified_time));
+    takes.sort_by_key(|take| Reverse(take.modified_time));
     Ok(takes)
 }
 
