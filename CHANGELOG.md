@@ -1,5 +1,26 @@
 # Changelog
 
+# [2.0.0](https://github.com/bolorundurovj/screenr/compare/v1.2.1...v2.0.0) (2026-09-02)
+
+* feat!: ScreenR v2, five screens and a native capture pipeline (#59) ([b038e12](https://github.com/bolorundurovj/screenr/commit/b038e125069abdccaeaaf838d543608368a7f89e)), closes [#59](https://github.com/bolorundurovj/screenr/issues/59)
+
+### BREAKING CHANGES
+
+* start_recording takes sourceIds instead of sourceId and
+  path, and settings move to a settings.json in the OS config dir.
+
+  * test: add contract, unit and integration coverage
+
+  * perf: optimise dev builds for per-pixel work
+
+  Compositing cost 433ms a frame unoptimised, capping tauri dev recordings
+  near 1.5fps. Optimising dependencies alone is not enough: the generic
+  half of image monomorphises into this crate.
+
+  * ci: add CI workflows for frontend and Rust, update release dependencies
+
+  * refactor: improve sorting of takes by modified time using Reverse
+
 ## [1.2.1](https://github.com/bolorundurovj/screenr/compare/v1.2.0...v1.2.1) (2026-08-22)
 
 # [1.2.0](https://github.com/bolorundurovj/screenr/compare/v1.1.3...v1.2.0) (2026-08-05)

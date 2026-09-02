@@ -1,7 +1,7 @@
 {
   "name": "screenr",
   "productName": "ScreenR",
-  "version": "1.2.1",
+  "version": "2.0.0",
   "description": "A simple desktop screen recorder",
   "author": "Bolorunduro Valiant-Joshua <bolorundurovb@duck.com>",
   "license": "MIT",
