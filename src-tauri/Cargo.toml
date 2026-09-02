@@ -1,6 +1,6 @@
 [package]
 name = "screenr"
-version = "2.0.0"
+version = "2.0.1"
 description = "A simple desktop screen recorder"
 authors = ["Bolorunduro Valiant-Joshua <bolorundurovb@duck.com>"]
 license = "MIT"

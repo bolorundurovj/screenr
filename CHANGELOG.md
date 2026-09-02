@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.0.1](https://github.com/bolorundurovj/screenr/compare/v2.0.0...v2.0.1) (2026-09-02)
+
+### Bug Fixes
+
+* enable macos private api for the transparent overlay ([#60](https://github.com/bolorundurovj/screenr/issues/60)) ([d46016b](https://github.com/bolorundurovj/screenr/commit/d46016b6d68d21807c64d30f699c02771437ed66))
+
 # [2.0.0](https://github.com/bolorundurovj/screenr/compare/v1.2.1...v2.0.0) (2026-09-02)
 
 * feat!: ScreenR v2, five screens and a native capture pipeline (#59) ([b038e12](https://github.com/bolorundurovj/screenr/commit/b038e125069abdccaeaaf838d543608368a7f89e)), closes [#59](https://github.com/bolorundurovj/screenr/issues/59)
