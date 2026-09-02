@@ -29,7 +29,8 @@
           "$VIDEO/**"
         ]
       }
-    }
+    },
+    "macOSPrivateApi": true
   },
   "bundle": {
     "active": true,
