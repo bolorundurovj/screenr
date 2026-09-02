@@ -1,89 +1,12 @@
-<h1 id="title" class="my-2 is-uppercase">{{ title }}</h1>
+<router-outlet></router-outlet>
 
-<div class="video-preview-container">
-  <!-- Use an img tag for base64 frame streaming from Rust -->
-  <img 
-    *ngIf="previewSrc" 
-    [src]="previewSrc" 
-    alt="Video Preview" 
-    width="100%" 
-    style="border-radius: 8px; border: 1px solid #333;"
-  />
-  <div *ngIf="!previewSrc" class="placeholder-box">
-    <p>Select a video source to begin</p>
-  </div>
-</div>
-
-<hr class="my-2" />
-
-<div class="center-buttons">
-  <button
-    id="startBtn"
-    class="button is-primary mx-2"
-    [class.is-danger]="isRecording"
-    (click)="startRecording()"
-    [disabled]="!selectedSourceId"
-  >
-    {{ startLabel }}
-  </button>
-  <button id="stopBtn" class="button is-warning mx-2" (click)="stopRecording()" [disabled]="!isRecording">
-    Stop
-  </button>
-  <button id="videoSelectBtn" class="button is-info mx-2" (click)="fetchSources()">
-    {{ selectLabel }}
-  </button>
-</div>
-
-<!-- Source Picker Overlay -->
-<div class="modal" [class.is-active]="showPicker">
-  <div class="modal-background" (click)="closePicker()"></div>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Select Video Source</p>
-      <button class="delete" aria-label="close" (click)="closePicker()"></button>
-    </header>
-    <section class="modal-card-body">
-      <div class="tabs is-centered">
-        <ul>
-          <li [class.is-active]="activeTab === 'displays'"><a (click)="activeTab = 'displays'">Displays</a></li>
-          <li [class.is-active]="activeTab === 'windows'"><a (click)="activeTab = 'windows'">Windows</a></li>
-        </ul>
-      </div>
-
-      <!-- Displays Tab -->
-      <div class="columns is-multiline" *ngIf="activeTab === 'displays'">
-        <div class="column is-6" *ngFor="let source of displays">
-          <div class="card source-card" (click)="selectSource(source)" style="cursor: pointer;">
-            <div class="card-image">
-              <figure class="image">
-                <img [src]="source.thumbnail" alt="Source thumbnail" />
-              </figure>
-            </div>
-            <div class="card-content p-2">
-              <p class="title is-6 has-text-centered">{{ source.name }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Windows Tab -->
-      <div class="columns is-multiline" *ngIf="activeTab === 'windows'">
-        <div class="column is-12 has-text-centered" *ngIf="windows.length === 0">
-          <p class="has-text-grey">Loading windows...</p>
-        </div>
-        <div class="column is-6" *ngFor="let source of windows">
-          <div class="card source-card" (click)="selectSource(source)" style="cursor: pointer;">
-            <div class="card-image">
-              <figure class="image">
-                <img [src]="source.thumbnail" alt="Source thumbnail" />
-              </figure>
-            </div>
-            <div class="card-content p-2">
-              <p class="title is-6 has-text-centered">{{ source.name }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
+@if (toast.active(); as active) {
+    <div
+        role="status"
+        aria-live="polite"
+        class="fixed bottom-6 right-6 z-[10000] max-w-[320px] rounded-[11px] px-4 py-3 text-[13px] font-semibold shadow-[0_18px_40px_-16px_rgba(0,0,0,0.6)]"
+        [class]="toastStyles[active.type]"
+    >
+        {{ active.message }}
+    </div>
+}

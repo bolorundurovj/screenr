@@ -1,0 +1,24 @@
+<div class="flex h-screen w-screen flex-col overflow-hidden bg-surface">
+    @if (title || showDone) {
+    <header class="flex flex-none items-center justify-between gap-4 border-b border-border-soft px-6 py-3">
+        <div class="flex min-w-0 flex-col gap-0.5">
+            <h1 class="truncate text-[16px] font-semibold tracking-tight text-ink">{{ title }}</h1>
+            @if (subtitle) {
+            <p class="truncate text-[12.5px] text-muted">{{ subtitle }}</p>
+            }
+        </div>
+        @if (showDone) {
+        <button
+            type="button"
+            (click)="done.emit()"
+            class="h-8 flex-none rounded-[9px] border border-border bg-surface px-4 text-[12.5px] font-semibold text-ink-3 transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+        >
+            {{ doneLabel }}
+        </button>
+        }
+    </header>
+    }
+    <div class="relative flex-1 overflow-hidden">
+        <ng-content></ng-content>
+    </div>
+</div>

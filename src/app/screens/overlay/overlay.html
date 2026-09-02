@@ -1,0 +1,55 @@
+<div class="flex h-screen w-screen items-center justify-center bg-transparent">
+    @if (recording.countdown(); as tick) {
+    <div
+        class="grid size-24 place-items-center rounded-full border border-white/15 bg-[rgba(16,20,24,0.8)] text-[44px] font-semibold tabular-nums text-white backdrop-blur-xl"
+    >
+        {{ tick }}
+    </div>
+    } @else if (recording.state().isRecording) {
+    <div
+        role="toolbar"
+        aria-label="Recording controls"
+        class="flex items-center gap-1.5 rounded-full border border-white/15 bg-[rgba(16,20,24,0.8)] py-1.5 pl-4 pr-1.5 text-white shadow-[0_18px_44px_-14px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+    >
+        <div class="flex min-w-[92px] items-center gap-2 font-mono text-[13px] tabular-nums">
+            <span
+                class="size-[7px] rounded-full"
+                [class]="recording.state().isPaused ? 'bg-warning' : 'bg-danger animate-pulse'"
+            ></span>
+            <span>{{ elapsed() }}</span>
+        </div>
+
+        <span class="mx-1 h-[18px] w-px bg-white/20"></span>
+
+        @if (recording.state().isPaused) {
+        <button
+            type="button"
+            (click)="recording.resume()"
+            title="Resume"
+            aria-label="Resume recording"
+            class="grid size-10 place-items-center rounded-full transition-colors hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+            <app-icon name="play" [size]="20" />
+        </button>
+        } @else {
+        <button
+            type="button"
+            (click)="recording.pause()"
+            title="Pause"
+            aria-label="Pause recording"
+            class="grid size-10 place-items-center rounded-full transition-colors hover:bg-white/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+            <app-icon name="pause" [size]="20" />
+        </button>
+        }
+
+        <button
+            type="button"
+            (click)="recording.stop()"
+            class="h-10 rounded-full bg-danger px-5 text-[13px] font-semibold text-white transition-colors hover:bg-danger-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+        >
+            Stop
+        </button>
+    </div>
+    }
+</div>

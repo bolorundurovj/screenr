@@ -1,0 +1,15 @@
+<button
+    type="button"
+    role="switch"
+    [attr.aria-checked]="value"
+    [attr.aria-label]="ariaLabel || null"
+    [disabled]="disabled"
+    (click)="toggle()"
+    class="relative h-[23px] w-[40px] shrink-0 rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-1 focus-visible:ring-offset-surface disabled:cursor-not-allowed disabled:opacity-50"
+    [class]="value ? 'bg-accent' : 'bg-track'"
+>
+    <span
+        class="absolute left-[3px] top-[3px] size-[17px] rounded-full bg-thumb shadow-[0_1px_3px_rgba(6,12,22,0.3)] transition-transform duration-200 ease-[cubic-bezier(0.2,0,0,1)]"
+        [class.translate-x-[17px]]="value"
+    ></span>
+</button>

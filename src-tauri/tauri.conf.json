@@ -12,13 +12,21 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "ScreenR",
-        "width": 800,
-        "height": 600
+        "width": 700,
+        "height": 640,
+        "minWidth": 420,
+        "minHeight": 520,
+        "resizable": true
       }
     ],
     "security": {
-      "csp": null
+      "csp": null,
+      "assetProtocol": {
+        "enable": true,
+        "scope": ["$VIDEO/**"]
+      }
     }
   },
   "bundle": {

@@ -1,0 +1,73 @@
+<app-window-frame title="Recordings" [subtitle]="summary()" [showDone]="true" (done)="router.navigate(['/capture'])">
+    <div class="flex h-full flex-col gap-1.5 overflow-y-auto bg-surface-2 p-4">
+        @for (take of takes(); track take.absolutePath) {
+        <div class="flex items-center gap-3 rounded-[11px] border border-border-soft bg-surface p-2.5">
+            <button
+                type="button"
+                (click)="open(take)"
+                class="flex min-w-0 flex-1 items-center gap-3 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+                <span
+                    class="grid h-11 w-[74px] flex-none place-items-center rounded-[7px] bg-[repeating-linear-gradient(135deg,#1d2734_0_8px,#222d3b_8px_16px)] text-white/60"
+                >
+                    <app-icon name="play" [size]="16" />
+                </span>
+                <span class="flex min-w-0 flex-col gap-0.5">
+                    <span class="truncate text-[13.5px] font-semibold text-ink">{{ take.name }}</span>
+                    <span class="truncate text-[11.5px] text-muted-2">
+                        {{ formatDate(take.modifiedTime) }} · {{ formatSize(take.size) }}
+                    </span>
+                </span>
+            </button>
+
+            <div class="flex flex-none items-center gap-1.5">
+                @if (take.hasSrt) {
+                <span
+                    class="rounded-full border border-accent bg-accent-soft px-2 py-0.5 text-[10px] font-bold tracking-wider text-accent"
+                >
+                    SRT
+                </span>
+                } @if (pendingDelete() === take.absolutePath) {
+                <button
+                    type="button"
+                    (click)="cancelDelete()"
+                    class="h-8 rounded-lg px-3 text-[12px] font-semibold text-muted transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="button"
+                    (click)="confirmDelete(take)"
+                    class="h-8 rounded-lg bg-danger px-3 text-[12px] font-semibold text-white transition-colors hover:bg-danger-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    Delete
+                </button>
+                } @else {
+                <button
+                    type="button"
+                    (click)="reveal(take)"
+                    title="Show in folder"
+                    aria-label="Show in folder"
+                    class="grid size-8 place-items-center rounded-lg text-muted transition-colors hover:bg-hover hover:text-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    <app-icon name="folder" [size]="17" />
+                </button>
+                <button
+                    type="button"
+                    (click)="confirmDelete(take)"
+                    title="Delete take"
+                    aria-label="Delete take"
+                    class="grid size-8 place-items-center rounded-lg text-muted transition-colors hover:bg-hover hover:text-danger-text focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                    <app-icon name="delete" [size]="17" />
+                </button>
+                }
+            </div>
+        </div>
+        } @empty {
+        <p class="py-12 text-center text-[13px] text-muted-2">
+            {{ loading() ? 'Reading your library…' : 'No recordings yet.' }}
+        </p>
+        }
+    </div>
+</app-window-frame>

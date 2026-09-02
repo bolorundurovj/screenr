@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <!--
+      Stroke icons on a 24x24 grid, lifted from the ScreenR design.
+      Each symbol carries its own paint so consumers only set color.
+    -->
+    <symbol id="library" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="M3 10h18M10 14.2v3.2l3-1.6z"></path>
+    </symbol>
+
+    <symbol id="settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3.2"></circle>
+        <path d="M19.1 14.6a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-2.87 1.21V21a2 2 0 1 1-4 0v-.13a1.7 1.7 0 0 0-2.87-1.2l-.06.05A2 2 0 1 1 3.88 16.9l.06-.06A1.7 1.7 0 0 0 2.73 14H2.6a2 2 0 1 1 0-4h.13a1.7 1.7 0 0 0 1.21-2.87l-.06-.06A2 2 0 1 1 6.71 4.24l.06.06A1.7 1.7 0 0 0 9.64 3.1V3a2 2 0 1 1 4 0v.13a1.7 1.7 0 0 0 2.87 1.21l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 21.4 10h.13a2 2 0 1 1 0 4h-.13a1.7 1.7 0 0 0-1.55 1.03z"></path>
+    </symbol>
+
+    <symbol id="pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M4 20l4.5-1L20 7.5 16.5 4 5 15.5 4 20z"></path>
+    </symbol>
+
+    <symbol id="highlighter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 18h16M8 18l1.6-8h4.8L16 18M10 10V6h4v4"></path>
+    </symbol>
+
+    <symbol id="clear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M4 19h16M6.5 15.5l8-8 3 3-8 8H6.5v-3z"></path>
+    </symbol>
+
+    <symbol id="keystrokes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="7" width="18" height="11" rx="2"></rect>
+        <path d="M7 11h1M11 11h1M15 11h1M8.5 14.5h7"></path>
+    </symbol>
+
+    <symbol id="folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h7A1.5 1.5 0 0 1 19 10v7.5A1.5 1.5 0 0 1 17.5 19h-13A1.5 1.5 0 0 1 3 17.5z"></path>
+    </symbol>
+
+    <symbol id="delete" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M4 7h16M9 7V4.5h6V7M6.5 7l.8 12.5h9.4L17.5 7"></path>
+    </symbol>
+
+    <symbol id="play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M8 5.5v13l11-6.5z"></path>
+    </symbol>
+
+    <symbol id="pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M9.5 5v14M14.5 5v14"></path>
+    </symbol>
+
+    <symbol id="stop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <rect x="6" y="6" width="12" height="12" rx="2"></rect>
+    </symbol>
+
+    <symbol id="display" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="13" rx="2"></rect>
+        <path d="M9 20h6"></path>
+    </symbol>
+
+    <symbol id="window" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <rect x="5" y="5" width="14" height="11" rx="1.6"></rect>
+        <path d="M3 19h18"></path>
+    </symbol>
+
+    <symbol id="copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <rect x="9" y="9" width="11" height="11" rx="2"></rect>
+        <path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path>
+    </symbol>
+
+    <symbol id="download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+            stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4v11m0 0l-4-4m4 4l4-4M4 18.5h16"></path>
+    </symbol>
+
+    <symbol id="srt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+        <path d="M7 14.5h4M13.5 14.5h3.5"></path>
+    </symbol>
+
+    <symbol id="close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+    </symbol>
+
+    <symbol id="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+            stroke-linejoin="round">
+        <path d="M5 12.5l4.5 4.5L19 7"></path>
+    </symbol>
+</svg>

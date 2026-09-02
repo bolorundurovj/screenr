@@ -1,0 +1,360 @@
+<app-window-frame title="Settings" [showDone]="true" (done)="save()">
+    @if (draft(); as s) {
+    <div class="grid h-full grid-cols-[172px_1fr] overflow-hidden">
+        <nav class="flex flex-col gap-0.5 overflow-y-auto border-r border-border-soft bg-surface-2 p-3">
+            @for (tab of tabs; track tab.id) {
+            <button
+                type="button"
+                [attr.aria-selected]="activeTab() === tab.id"
+                (click)="activeTab.set(tab.id)"
+                class="rounded-[9px] border px-3 py-2 text-left text-[13px] font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                [class]="activeTab() === tab.id
+              ? 'border-border-2 bg-surface text-ink'
+              : 'border-transparent bg-transparent text-muted hover:text-ink'"
+            >
+                {{ tab.label }}
+            </button>
+            }
+        </nav>
+
+        <div class="overflow-y-auto p-6">
+            @switch (activeTab()) { @case ('capture') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">Capture</h2>
+                    <p class="max-w-[44ch] text-[13px] leading-relaxed text-muted">
+                        Defaults for what gets recorded. Changes apply to the next session.
+                    </p>
+                </header>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex flex-col gap-1.5 text-[11.5px] font-semibold text-ink-2">
+                        Frame rate
+                        <select
+                            class="h-10 rounded-[9px] border border-border bg-surface px-3 text-[13px] font-medium text-ink"
+                            [ngModel]="s.fps"
+                            (ngModelChange)="update('fps', $event)"
+                            name="fps"
+                        >
+                            @for (rate of frameRates; track rate) {
+                            <option [ngValue]="rate">{{ rate }} fps</option>
+                            }
+                        </select>
+                    </label>
+
+                    <label class="flex flex-col gap-1.5 text-[11.5px] font-semibold text-ink-2">
+                        Resolution
+                        <select
+                            class="h-10 rounded-[9px] border border-border bg-surface px-3 text-[13px] font-medium text-ink"
+                            [ngModel]="s.resolution"
+                            (ngModelChange)="update('resolution', $event)"
+                            name="resolution"
+                        >
+                            @for (option of resolutions; track option.value) {
+                            <option [ngValue]="option.value">{{ option.label }}</option>
+                            }
+                        </select>
+                    </label>
+                </div>
+
+                <div class="flex flex-col">
+                    <div class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5">
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-[13.5px] font-semibold">Show cursor</span>
+                            <span class="text-[12px] text-muted-2">
+                                Include the pointer in the recording. Not supported by the capture backend yet
+                            </span>
+                        </span>
+                        <app-toggle-switch
+                            ariaLabel="Show cursor"
+                            [disabled]="true"
+                            [ngModel]="s.showCursor"
+                            (ngModelChange)="update('showCursor', $event)"
+                            name="showCursor"
+                        />
+                    </div>
+
+                    <div class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5">
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-[13.5px] font-semibold">Countdown</span>
+                            <span class="text-[12px] text-muted-2">Three-second delay before start</span>
+                        </span>
+                        <app-toggle-switch
+                            ariaLabel="Countdown"
+                            [ngModel]="s.countdown"
+                            (ngModelChange)="update('countdown', $event)"
+                            name="countdown"
+                        />
+                    </div>
+                </div>
+            </section>
+            } @case ('audio') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">Audio tracks</h2>
+                    <p class="max-w-[48ch] text-[13px] leading-relaxed text-muted">
+                        The microphone records as a separate track and is merged into the take when you stop.
+                    </p>
+                </header>
+
+                <div class="flex flex-col">
+                    <div class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5">
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-[13.5px] font-semibold">Microphone</span>
+                            <span class="text-[12px] text-muted-2">System default input</span>
+                        </span>
+                        <app-toggle-switch
+                            ariaLabel="Microphone"
+                            [ngModel]="s.mic"
+                            (ngModelChange)="update('mic', $event)"
+                            name="mic"
+                        />
+                    </div>
+
+                    <div
+                        class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5 opacity-60"
+                        title="System sound capture is coming in a future release"
+                    >
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-[13.5px] font-semibold">System sound</span>
+                            <span class="text-[12px] text-muted-2">Loopback / desktop audio · coming soon</span>
+                        </span>
+                        <app-toggle-switch
+                            ariaLabel="System sound, coming soon"
+                            [disabled]="true"
+                            [ngModel]="false"
+                            name="systemAudio"
+                        />
+                    </div>
+                </div>
+            </section>
+            } @case ('drawing') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">Live drawing</h2>
+                    <p class="max-w-[48ch] text-[13px] leading-relaxed text-muted">
+                        Annotation is not wired to the capture pipeline yet, so strokes would not appear in the saved
+                        file.
+                    </p>
+                </header>
+
+                <div class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5">
+                    <span class="flex flex-col gap-0.5">
+                        <span class="text-[13.5px] font-semibold">Enable drawing tools</span>
+                        <span class="text-[12px] text-muted-2"> Pen and highlighter on the recording overlay </span>
+                    </span>
+                    <app-toggle-switch
+                        ariaLabel="Enable drawing tools"
+                        [disabled]="true"
+                        [ngModel]="s.drawTools"
+                        (ngModelChange)="update('drawTools', $event)"
+                        name="drawTools"
+                    />
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <span class="text-[11.5px] font-semibold text-ink-2">Default pen colour</span>
+                    <div class="flex flex-wrap gap-2">
+                        @for (pen of penColors; track pen.value) {
+                        <app-chip-button
+                            [label]="pen.label"
+                            [color]="pen.value"
+                            [selected]="s.penColor === pen.value"
+                            (clicked)="update('penColor', pen.value)"
+                        />
+                        }
+                    </div>
+                </div>
+            </section>
+            } @case ('ai') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">AI transcription</h2>
+                    <p class="max-w-[50ch] text-[13px] leading-relaxed text-muted">
+                        Transcription is not implemented yet. Endpoint details are stored so they are ready when it
+                        lands.
+                    </p>
+                </header>
+
+                <div class="flex flex-col gap-2">
+                    <span class="text-[11.5px] font-semibold text-ink-2">Engine</span>
+                    <div class="flex flex-wrap gap-2">
+                        @for (engine of engines; track engine.label) {
+                        <app-chip-button
+                            [label]="engine.label"
+                            [selected]="s.aiEngine === engine.label"
+                            (clicked)="selectEngine(engine)"
+                        />
+                        }
+                    </div>
+                    <p class="text-[11.5px] leading-relaxed text-muted-2">{{ engineNote }}</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <label class="flex flex-col gap-1.5 text-[11.5px] font-semibold text-ink-2">
+                        Endpoint
+                        <input
+                            type="text"
+                            spellcheck="false"
+                            class="h-10 rounded-[9px] border border-border bg-surface px-3 font-mono text-[12px] text-ink"
+                            [ngModel]="s.aiEndpoint"
+                            (ngModelChange)="update('aiEndpoint', $event)"
+                            name="aiEndpoint"
+                        />
+                    </label>
+
+                    <label class="flex flex-col gap-1.5 text-[11.5px] font-semibold text-ink-2">
+                        Model
+                        <input
+                            type="text"
+                            spellcheck="false"
+                            class="h-10 rounded-[9px] border border-border bg-surface px-3 font-mono text-[12px] text-ink"
+                            [ngModel]="s.aiModel"
+                            (ngModelChange)="update('aiModel', $event)"
+                            name="aiModel"
+                        />
+                    </label>
+                </div>
+
+                <label class="flex max-w-[50%] flex-col gap-1.5 text-[11.5px] font-semibold text-ink-2">
+                    Transcript language
+                    <input
+                        type="text"
+                        spellcheck="false"
+                        class="h-10 rounded-[9px] border border-border bg-surface px-3 text-[13px] text-ink"
+                        [ngModel]="s.aiLanguage"
+                        (ngModelChange)="update('aiLanguage', $event)"
+                        name="aiLanguage"
+                    />
+                </label>
+
+                <div class="flex items-center gap-3 border-t border-border-soft pt-3.5">
+                    <button
+                        type="button"
+                        (click)="notImplemented()"
+                        class="h-10 rounded-[10px] border border-border bg-surface px-4 text-[13px] font-semibold text-ink transition-colors hover:bg-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                        Test connection
+                    </button>
+                </div>
+            </section>
+            } @case ('output') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">Output</h2>
+                    <p class="max-w-[48ch] text-[13px] leading-relaxed text-muted">
+                        Where takes are saved and what happens right after you stop.
+                    </p>
+                </header>
+
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[11.5px] font-semibold text-ink-2">Save folder</span>
+                    <div class="flex gap-2">
+                        <span
+                            class="flex h-10 min-w-0 flex-1 items-center truncate rounded-[9px] border border-border bg-surface-2 px-3 font-mono text-[12.5px] text-ink-2"
+                            [title]="s.saveFolder"
+                        >
+                            {{ s.saveFolder || 'Not set' }}
+                        </span>
+                        <button
+                            type="button"
+                            (click)="chooseFolder()"
+                            class="h-10 flex-none rounded-[9px] border border-border bg-surface px-4 text-[13px] font-semibold text-ink transition-colors hover:bg-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        >
+                            Change
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2">
+                    <span class="text-[11.5px] font-semibold text-ink-2">Default format</span>
+                    <div class="flex flex-wrap gap-2">
+                        @for (format of formats; track format.value) {
+                        <app-chip-button
+                            [label]="format.label"
+                            [selected]="s.format === format.value"
+                            (clicked)="update('format', format.value)"
+                        />
+                        }
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5">
+                    <span class="flex flex-col gap-0.5">
+                        <span class="text-[13.5px] font-semibold">Local AI subtitles</span>
+                        <span class="text-[12px] text-muted-2"> Generate an .srt after stop. Not implemented yet </span>
+                    </span>
+                    <app-toggle-switch
+                        ariaLabel="Local AI subtitles"
+                        [disabled]="true"
+                        [ngModel]="s.srtDefault"
+                        (ngModelChange)="update('srtDefault', $event)"
+                        name="srtDefault"
+                    />
+                </div>
+            </section>
+            } @case ('appearance') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">Appearance</h2>
+                    <p class="max-w-[48ch] text-[13px] leading-relaxed text-muted">
+                        Theme applies to the app window and the recording controls. Captures are unaffected.
+                    </p>
+                </header>
+
+                <div class="grid grid-cols-3 gap-2.5">
+                    @for (theme of themes; track theme.value) {
+                    <button
+                        type="button"
+                        [attr.aria-pressed]="s.theme === theme.value"
+                        (click)="update('theme', theme.value)"
+                        class="flex flex-col gap-2.5 rounded-xl border p-3 text-left transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                        [class]="s.theme === theme.value
+                      ? 'border-accent bg-accent-soft'
+                      : 'border-border-2 bg-surface-2 hover:bg-hover'"
+                    >
+                        <span class="flex flex-col gap-0.5">
+                            <span class="text-[12.5px] font-semibold text-ink">{{ theme.label }}</span>
+                            <span class="text-[11px] text-muted-2">{{ theme.note }}</span>
+                        </span>
+                    </button>
+                    }
+                </div>
+
+                <div class="flex items-center justify-between gap-4 border-t border-border-soft py-3.5">
+                    <span class="flex flex-col gap-0.5">
+                        <span class="text-[13.5px] font-semibold">Overlay follows theme</span>
+                        <span class="text-[12px] text-muted-2">Tint the recording bar to match</span>
+                    </span>
+                    <app-toggle-switch
+                        ariaLabel="Overlay follows theme"
+                        [ngModel]="s.overlayFollowsTheme"
+                        (ngModelChange)="update('overlayFollowsTheme', $event)"
+                        name="overlayFollowsTheme"
+                    />
+                </div>
+            </section>
+            } @case ('about') {
+            <section class="flex flex-col gap-5">
+                <header class="flex flex-col gap-1">
+                    <h2 class="text-[18px] font-semibold tracking-tight">ScreenR</h2>
+                    <p class="font-mono text-[11.5px] text-muted">Version {{ version() }}</p>
+                </header>
+
+                <div class="flex items-center gap-3 border-t border-border-soft pt-3.5">
+                    <button
+                        type="button"
+                        (click)="notImplemented()"
+                        class="h-10 rounded-[10px] border border-border bg-surface px-4 text-[13px] font-semibold text-ink transition-colors hover:bg-hover focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    >
+                        Check for updates
+                    </button>
+                </div>
+
+                <p class="text-[11.5px] leading-relaxed text-muted-2">Encoding by FFmpeg · MIT licensed.</p>
+            </section>
+            } }
+        </div>
+    </div>
+    }
+</app-window-frame>

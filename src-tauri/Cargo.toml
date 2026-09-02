@@ -19,11 +19,9 @@ crate-type = ["staticlib", "cdylib", "rlib"]
 tauri-build = { version = "2", features = [] }
 
 [dependencies]
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["protocol-asset"] }
 tauri-plugin-opener = "2"
 tauri-plugin-dialog = "2"
-tauri-plugin-fs = "2"
-tauri-plugin-notification = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 xcap = "0.9.8"
@@ -31,3 +29,21 @@ ffmpeg-sidecar = "2.5.2"
 image = "0.25.10"
 rayon = "1.12.0"
 base64 = "0.23.1"
+cpal = "0.15"
+hound = "3.5"
+
+[target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
+tauri-plugin-global-shortcut = "2"
+
+[dev-dependencies]
+regex = "1"
+
+# Capture is per-pixel work over millions of pixels a frame, and unoptimised it
+# runs roughly 100x slower, which drops `tauri dev` recordings to a couple of
+# frames a second. The generic half of `image` monomorphises into this crate, so
+# optimising only the dependencies leaves the compositing step slow.
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3

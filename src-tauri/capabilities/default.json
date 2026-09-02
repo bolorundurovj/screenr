@@ -5,8 +5,8 @@
   "windows": ["main"],
   "permissions": [
     "core:default",
-    "opener:default",
-    "dialog:allow-save",
-    "notification:default"
+    "core:window:allow-set-size",
+    "core:window:allow-set-title",
+    "dialog:allow-open"
   ]
 }
